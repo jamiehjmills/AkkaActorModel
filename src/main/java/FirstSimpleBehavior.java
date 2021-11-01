@@ -7,7 +7,6 @@ import akka.actor.typed.javadsl.Receive;
 
 public class FirstSimpleBehavior extends AbstractBehavior<String> {
 
-
     private FirstSimpleBehavior(ActorContext<String> context) {
         super(context);
     }
@@ -25,11 +24,27 @@ public class FirstSimpleBehavior extends AbstractBehavior<String> {
     public Receive<String> createReceive() {
         return newReceiveBuilder()
                 //put who are you
-                .onMessageEquals("create a child", () -> {
+                .onMessageEquals("say hello", () -> {
 
                     //create a new actor (this will be a child actor)
-                    ActorRef<String> secondActor = getContext().spawn(FirstSimpleBehavior.create(), "secondActor");
-                    secondActor.tell("who are you?");
+//                    ActorRef<String> secondActor = getContext().spawn(FirstSimpleBehavior.create(), "secondActor");
+//                    secondActor.tell("who are you?");
+//                    return this;
+
+                    System.out.println("hello");
+                    return this;
+
+                })
+                .onMessageEquals("who are you?", () -> {
+
+                    System.out.println("my path is" + getContext().getSelf().path());
+                    return this;
+
+                })
+                .onMessageEquals("create a child", () -> {
+
+                    ActorRef<String> secondAct = getContext().spawn(FirstSimpleBehavior.create(), "secondActor");
+                    secondAct.tell("who are you?");
                     return this;
 
                 })
@@ -39,6 +54,5 @@ public class FirstSimpleBehavior extends AbstractBehavior<String> {
                 })
                 .build();
     }
-
 
 }

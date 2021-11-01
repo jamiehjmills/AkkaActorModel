@@ -14,7 +14,7 @@ public class Main {
 
         public static void main(String[] args){
 
-            ActorSystem<String> actorSystem = ActorSystem.create(WorkerBehavior.create(), "WorkerBehavior");
+            ActorSystem<String> actorSystem = ActorSystem.create(ManagerBehavior.create(), "ManagerBehavior");
             actorSystem.tell("start");
         }
 

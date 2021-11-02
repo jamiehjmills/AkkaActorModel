@@ -32,11 +32,9 @@ public class ManagerBehavior extends AbstractBehavior<String> {
 
                    for(int i = 0; i < 20; i++){
 
-                       System.out.println("works number :" + i);
-
                        //ActorSystem<String> actorSystem = ActorSystem.create(WorkerBehavior.create(), "WorkerBehavior"+i);
-                       ActorRef<String> actorSystem = getContext().spawn(FirstSimpleBehavior.create(), "secondActor");
-                       actorSystem.tell("start");
+                       ActorRef<WorkerBehavior.Command> worker = getContext().spawn(WorkerBehavior.create(), "WorkerBehavior"+i);
+                       worker.tell(new WorkerBehavior.Command("start", getContext().getSelf()));
                    }
 
                    return this;
